@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
 <title>Always Bready — Taste Test</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Playball&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
     --cream:#F5EBDA;
@@ -42,11 +42,13 @@
     position:absolute; inset:0; pointer-events:none; opacity:0.55;
   }
   h1.logo{
-    font-family:'Playball', cursive;
-    font-size:52px;
+    font-family:'Montserrat', sans-serif;
+    font-weight:800;
+    letter-spacing:-0.02em;
+    font-size:36px;
     color:var(--rust-dark);
     margin:0;
-    line-height:1;
+    line-height:1.1;
   }
   .tagline{
     font-size:14px;
@@ -106,8 +108,10 @@
   @keyframes fadeIn{from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:translateY(0);}}
 
   .flavor-name{
-    font-family:'Playball', cursive;
-    font-size:34px;
+    font-family:'Montserrat', sans-serif;
+    font-weight:800;
+    letter-spacing:-0.01em;
+    font-size:24px;
     color:var(--rust-dark);
     margin:0 0 2px 0;
   }
@@ -277,8 +281,10 @@
   .done-screen.visible{display:block;}
   .done-emoji{font-size:52px;}
   .done-title{
-    font-family:'Playball', cursive;
-    font-size:36px;
+    font-family:'Montserrat', sans-serif;
+    font-weight:800;
+    letter-spacing:-0.01em;
+    font-size:26px;
     color:var(--rust-dark);
     margin:10px 0 6px 0;
   }
@@ -301,6 +307,97 @@
     color:var(--brown-soft);
     opacity:.7;
     margin-top:30px;
+  }
+  .admin-link{
+    display:inline-block;
+    margin-top:10px;
+    font-size:11px;
+    color:var(--brown-soft);
+    opacity:.45;
+    cursor:pointer;
+    text-decoration:underline;
+  }
+  .admin-link:hover{opacity:.8;}
+
+  /* Results view */
+  .results-screen{display:none;}
+  .results-screen.visible{display:block;}
+  .results-header{
+    display:flex; align-items:center; justify-content:space-between;
+    margin-bottom:18px;
+  }
+  .results-header h2{
+    font-family:'Montserrat', sans-serif;
+    font-weight:800;
+    letter-spacing:-0.01em;
+    font-size:22px;
+    color:var(--rust-dark);
+    margin:0;
+  }
+  .results-close{
+    background:none; border:1.5px solid var(--line); border-radius:10px;
+    padding:8px 12px; font-family:inherit; font-weight:700; cursor:pointer;
+    color:var(--brown-soft); font-size:13px;
+  }
+  .r-flavor-card{
+    background:var(--cream-card);
+    border:1px solid var(--line);
+    border-radius:18px;
+    padding:20px;
+    margin-bottom:16px;
+    box-shadow:0 3px 0 var(--line);
+  }
+  .r-flavor-title{
+    font-family:'Montserrat', sans-serif;
+    font-weight:800;
+    letter-spacing:-0.01em;
+    font-size:19px;
+    color:var(--rust-dark);
+    margin:0 0 2px 0;
+  }
+  .r-count{font-size:12px; color:var(--brown-soft); margin-bottom:14px;}
+  .r-stat-row{display:flex; justify-content:space-between; align-items:baseline; margin-top:14px;}
+  .r-stat-label{font-size:13.5px; font-weight:700;}
+  .r-stat-value{font-size:13.5px; color:var(--brown-soft);}
+  .r-bar-track{background:#EEE1C8; border-radius:8px; height:8px; margin-top:6px; overflow:hidden;}
+  .r-bar-fill{background:var(--rust); height:100%; border-radius:8px;}
+  .r-check-line{display:flex; justify-content:space-between; font-size:13px; padding:4px 0; border-top:1px dashed var(--line);}
+  .r-check-line:first-of-type{border-top:none;}
+  .r-notes{margin-top:10px;}
+  .r-note{
+    font-size:12.5px; background:#fff; border:1px solid var(--line);
+    border-radius:8px; padding:7px 10px; margin-top:6px; color:var(--brown-soft);
+  }
+  .r-empty{
+    text-align:center; color:var(--brown-soft); font-size:14px; padding:40px 20px;
+  }
+  .lock-screen{
+    display:none;
+    text-align:center;
+    padding:60px 20px;
+  }
+  .lock-screen.visible{display:block;}
+  .lock-screen input{
+    margin-top:16px;
+    padding:12px 16px;
+    border-radius:12px;
+    border:1.5px solid var(--line);
+    font-family:inherit;
+    font-size:15px;
+    text-align:center;
+    width:180px;
+  }
+  .lock-screen button{
+    display:block;
+    margin:14px auto 0 auto;
+    padding:10px 22px;
+    border-radius:12px;
+    border:none;
+    background:var(--rust);
+    color:#fff;
+    font-family:inherit;
+    font-weight:700;
+    cursor:pointer;
   }
 </style>
 </head>
@@ -334,7 +431,26 @@
     <div class="done-code" id="doneCode"></div>
   </div>
 
-  <footer>Made with love (and a lot of flour) — Always Bready 🍞</footer>
+  <div class="lock-screen" id="lockScreen">
+    <div class="flavor-name" style="font-size:22px;">Results are locked</div>
+    <div class="q-hint">Enter the passcode to view responses</div>
+    <input type="password" id="passcodeInput" placeholder="Passcode">
+    <button id="unlockBtn">Unlock</button>
+    <div id="lockError" style="color:var(--rust-dark); font-size:12.5px; margin-top:10px;"></div>
+  </div>
+
+  <div class="results-screen" id="resultsScreen">
+    <div class="results-header">
+      <h2>Results</h2>
+      <button class="results-close" id="closeResultsBtn">Back to survey</button>
+    </div>
+    <div id="resultsBody"></div>
+  </div>
+
+  <footer id="mainFooter">
+    Made with love (and a lot of flour) — Always Bready 🍞
+    <div><span class="admin-link" id="adminLink">view results</span></div>
+  </footer>
 </div>
 
 <script>
@@ -373,7 +489,7 @@ function buildNameCard(){
   div.className = 'card';
   div.dataset.step = "0";
   div.innerHTML = `
-    <div class="flavor-name" style="font-size:30px;">Before we start</div>
+    <div class="flavor-name" style="font-size:24px;">Before we start</div>
     <div class="flavor-sub">Just so I know who to thank 🙂</div>
     <div class="name-field">
       <label for="nameInput">Your name</label>
@@ -555,6 +671,144 @@ async function submitSurvey(){
 }
 
 showStep();
+
+/* ---------- Results dashboard ---------- */
+const PASSCODE = "bready2026";
+const surveySection = document.getElementById('surveySection');
+const doneScreen = document.getElementById('doneScreen');
+const lockScreen = document.getElementById('lockScreen');
+const resultsScreen = document.getElementById('resultsScreen');
+const mainFooter = document.getElementById('mainFooter');
+const CHECK_LABEL_MAP = Object.fromEntries(CHECKBOX_OPTIONS.map(o => [o.id, o.label]));
+
+document.getElementById('adminLink').addEventListener('click', () => {
+  surveySection.style.display = 'none';
+  doneScreen.classList.remove('visible');
+  lockScreen.classList.add('visible');
+  document.getElementById('passcodeInput').focus();
+});
+
+document.getElementById('unlockBtn').addEventListener('click', tryUnlock);
+document.getElementById('passcodeInput').addEventListener('keydown', e => {
+  if(e.key === 'Enter') tryUnlock();
+});
+
+function tryUnlock(){
+  const val = document.getElementById('passcodeInput').value;
+  if(val === PASSCODE){
+    lockScreen.classList.remove('visible');
+    loadResults();
+  } else {
+    document.getElementById('lockError').textContent = "That's not it — try again.";
+  }
+}
+
+document.getElementById('closeResultsBtn').addEventListener('click', () => {
+  resultsScreen.classList.remove('visible');
+  step = 0;
+  surveySection.style.display = 'block';
+  showStep();
+});
+
+async function loadResults(){
+  resultsScreen.classList.add('visible');
+  const body = document.getElementById('resultsBody');
+  body.innerHTML = '<div class="r-empty">Loading responses...</div>';
+
+  let keys = [];
+  try{
+    const listResult = await window.storage.list('response:', true);
+    keys = (listResult && listResult.keys) ? listResult.keys : [];
+  }catch(e){
+    body.innerHTML = '<div class="r-empty">Could not load responses yet. Try again in a moment.</div>';
+    return;
+  }
+
+  if(keys.length === 0){
+    body.innerHTML = '<div class="r-empty">No responses yet — share the survey link to start collecting taste tests! 🍞</div>';
+    return;
+  }
+
+  const allResponses = [];
+  for(const k of keys){
+    try{
+      const res = await window.storage.get(k, true);
+      if(res && res.value){
+        allResponses.push(JSON.parse(res.value));
+      }
+    }catch(e){ /* skip unreadable entries */ }
+  }
+
+  body.innerHTML = '';
+  const totalCard = document.createElement('div');
+  totalCard.className = 'r-count';
+  totalCard.style.marginBottom = '16px';
+  totalCard.textContent = `${allResponses.length} response${allResponses.length===1?'':'s'} collected from: ${[...new Set(allResponses.map(r=>r.respondent).filter(Boolean))].join(', ') || '—'}`;
+  body.appendChild(totalCard);
+
+  FLAVORS.forEach(flavor => {
+    const relevant = allResponses.filter(r => r.answers && r.answers[flavor.key]);
+    const card = document.createElement('div');
+    card.className = 'r-flavor-card';
+
+    if(relevant.length === 0){
+      card.innerHTML = `<div class="r-flavor-title">${flavor.name}</div><div class="r-count">No responses yet</div>`;
+      body.appendChild(card);
+      return;
+    }
+
+    // Texture average
+    const textures = relevant.map(r => r.answers[flavor.key].texture).filter(v => v !== null && v !== undefined);
+    const avgTexture = textures.length ? (textures.reduce((a,b)=>a+b,0)/textures.length) : 0;
+
+    // Sweeter yes/no
+    const sweeterYes = relevant.filter(r => r.answers[flavor.key].sweeter === 'yes').length;
+    const sweeterNo = relevant.filter(r => r.answers[flavor.key].sweeter === 'no').length;
+    const sweeterTotal = sweeterYes + sweeterNo;
+
+    // Checkbox counts
+    const checkCounts = {};
+    CHECKBOX_OPTIONS.forEach(o => checkCounts[o.id] = 0);
+    const notes = [];
+    relevant.forEach(r => {
+      const a = r.answers[flavor.key];
+      CHECKBOX_OPTIONS.forEach(o => {
+        if(a.checks && a.checks[o.id]) checkCounts[o.id]++;
+        const noteVal = a[`note_${o.id}`];
+        if(a.checks && a.checks[o.id] && noteVal && noteVal.trim()){
+          notes.push({opt:o.label, text:noteVal.trim(), by:r.respondent});
+        }
+      });
+    });
+
+    let html = `
+      <div class="r-flavor-title">${flavor.name}</div>
+      <div class="r-count">${relevant.length} response${relevant.length===1?'':'s'}</div>
+
+      <div class="r-stat-row"><div class="r-stat-label">Texture (avg)</div><div class="r-stat-value">${avgTexture.toFixed(1)} / 5</div></div>
+      <div class="r-bar-track"><div class="r-bar-fill" style="width:${(avgTexture/5*100).toFixed(0)}%"></div></div>
+
+      <div class="r-stat-row"><div class="r-stat-label">Wants it sweeter</div><div class="r-stat-value">${sweeterYes}/${sweeterTotal}</div></div>
+      <div class="r-bar-track"><div class="r-bar-fill" style="width:${sweeterTotal ? (sweeterYes/sweeterTotal*100).toFixed(0) : 0}%; background:var(--gold);"></div></div>
+
+      <div style="margin-top:16px; font-weight:700; font-size:13.5px;">Filling feedback</div>
+    `;
+    CHECKBOX_OPTIONS.forEach(o => {
+      html += `<div class="r-check-line"><span>${o.label}</span><span>${checkCounts[o.id]}</span></div>`;
+    });
+
+    if(notes.length){
+      html += `<div class="r-notes">`;
+      notes.forEach(n => {
+        html += `<div class="r-note"><b>${n.by || 'Anonymous'}</b> — ${n.text}</div>`;
+      });
+      html += `</div>`;
+    }
+
+    card.innerHTML = html;
+    body.appendChild(card);
+  });
+}
 </script>
 </body>
 </html>
