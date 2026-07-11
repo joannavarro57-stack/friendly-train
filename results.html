@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Always Bready — Results from WhatsApp</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playball&family=Lobster&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#F5E8D3;
+    --cream-soft:#FBF3E6;
+    --brown:#3D2817;
+    --brown-soft:#6B4A34;
+    --rust:#C1502E;
+    --rust-dark:#9E3E22;
+    --gold:#E8A54B;
+    --green:#5B8A5B;
+    --line:#E3CBA5;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--cream);
+    color:var(--brown);
+    font-family:'Nunito',sans-serif;
+    padding:0 0 60px;
+  }
+  header{ text-align:center; padding:44px 20px 18px; }
+  .brand{ font-family:'Playball',cursive; font-size:50px; color:var(--rust); margin:0; line-height:1; }
+  .subbrand{ font-family:'Lobster',cursive; font-size:16px; color:var(--brown-soft); margin:8px 0 0; }
+
+  main{ max-width:640px; margin:0 auto; padding:0 20px; }
+
+  .paste-card{
+    background:var(--cream-soft);
+    border:1px solid var(--line);
+    border-radius:18px;
+    padding:22px 22px 24px;
+    margin-top:10px;
+  }
+  .paste-card label{
+    font-weight:700;
+    font-size:14px;
+    display:block;
+    margin-bottom:8px;
+  }
+  .paste-card .helptext{
+    font-size:12.5px;
+    color:var(--brown-soft);
+    margin:0 0 12px;
+    line-height:1.5;
+  }
+  textarea#pasteArea{
+    width:100%;
+    min-height:200px;
+    padding:12px 14px;
+    border:1.5px solid var(--line);
+    border-radius:10px;
+    font-family:'Nunito',sans-serif;
+    font-size:13.5px;
+    resize:vertical;
+    color:var(--brown);
+  }
+  textarea#pasteArea:focus{outline:2px solid var(--gold);}
+  .btn-row{
+    display:flex;
+    gap:10px;
+    margin-top:14px;
+  }
+  .btn{
+    flex:1;
+    padding:13px;
+    border:none;
+    border-radius:10px;
+    font-weight:800;
+    font-size:14.5px;
+    cursor:pointer;
+    transition:.15s;
+  }
+  .btn-primary{
+    background:var(--rust);
+    color:#fff;
+    box-shadow:0 3px 0 var(--rust-dark);
+  }
+  .btn-primary:active{transform:translateY(2px);box-shadow:0 1px 0 var(--rust-dark);}
+  .btn-secondary{
+    background:#fff;
+    color:var(--brown-soft);
+    border:1.5px solid var(--line);
+  }
+  .parse-note{
+    font-size:12.5px;
+    margin-top:10px;
+    color:var(--rust-dark);
+    font-weight:700;
+    display:none;
+  }
+
+  .status-bar{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin:26px 0 6px;
+  }
+  .count-pill{
+    background:var(--rust);
+    color:#fff;
+    font-weight:800;
+    font-size:13.5px;
+    padding:6px 14px;
+    border-radius:20px;
+  }
+  .empty-state{
+    text-align:center;
+    padding:40px 20px;
+    color:var(--brown-soft);
+    font-size:14.5px;
+  }
+
+  .flavor-card{
+    background:var(--cream-soft);
+    border:1px solid var(--line);
+    border-radius:18px;
+    padding:24px 24px 26px;
+    margin-bottom:22px;
+    box-shadow:0 3px 0 var(--line);
+  }
+  .flavor-title{ font-family:'Lobster',cursive; font-size:24px; color:var(--rust-dark); margin:0 0 4px; }
+  .flavor-count{ font-size:12.5px; color:var(--brown-soft); margin-bottom:18px; }
+  .metric{ margin-bottom:18px; }
+  .metric:last-child{margin-bottom:0;}
+  .metric-label{ font-weight:700; font-size:13.5px; margin-bottom:8px; display:flex; justify-content:space-between; }
+  .avg-badge{ color:var(--rust); font-weight:800; }
+  .bar-row{ display:flex; align-items:center; gap:8px; margin-bottom:5px; }
+  .bar-tag{ font-size:12px; width:20px; color:var(--brown-soft); font-weight:700; flex-shrink:0; }
+  .bar-track{ flex:1; height:14px; background:#fff; border:1px solid var(--line); border-radius:7px; overflow:hidden; }
+  .bar-fill{ height:100%; background:var(--rust); border-radius:7px 0 0 7px; transition:width .4s ease; }
+  .bar-num{ font-size:11.5px; width:18px; text-align:right; color:var(--brown-soft); flex-shrink:0; }
+  .split-row{ display:flex; gap:10px; }
+  .split-item{ flex:1; background:#fff; border:1px solid var(--line); border-radius:10px; padding:10px 12px; text-align:center; }
+  .split-num{ font-weight:800; font-size:18px; color:var(--rust-dark); }
+  .split-label{ font-size:11.5px; color:var(--brown-soft); margin-top:2px; }
+  .filling-item{ background:#fff; border:1px solid var(--line); border-radius:10px; padding:10px 12px; margin-bottom:7px; }
+  .filling-item:last-child{margin-bottom:0;}
+  .filling-top{ display:flex; justify-content:space-between; align-items:center; font-size:13px; }
+  .filling-text{color:var(--brown);}
+  .filling-tally{ font-weight:800; color:var(--rust); flex-shrink:0; margin-left:10px; }
+  .filling-notes{ margin-top:6px; padding-top:6px; border-top:1px dashed var(--line); }
+  .filling-note{ font-size:12px; color:var(--brown-soft); font-style:italic; margin-bottom:3px; }
+  .respondent-list{ font-size:12px; color:var(--brown-soft); text-align:center; line-height:1.6; margin-top:6px; }
+</style>
+</head>
+<body>
+
+<header>
+  <p class="brand">Always Bready</p>
+  <p class="subbrand">results from WhatsApp</p>
+</header>
+
+<main>
+  <div class="paste-card">
+    <label for="pasteArea">Paste WhatsApp responses here</label>
+    <p class="helptext">Copy the messages your friends sent you and paste them all in below — one after another is fine, this reads as many responses as you paste at once.</p>
+    <textarea id="pasteArea" placeholder="Always Bready — Taste Test Feedback
+From: Maria
+
+🥖 Chicken Lumpia
+- Dough texture: 4/5
+- Sweeter dough? No, it's enough
+- Filling:
+   • Right amount of spices
+
+(paste as many responses as you like, one after another)"></textarea>
+    <div class="btn-row">
+      <button class="btn btn-primary" id="analyzeBtn">Analyze responses</button>
+      <button class="btn btn-secondary" id="clearBtn">Clear</button>
+    </div>
+    <p class="parse-note" id="parseNote"></p>
+  </div>
+
+  <div class="status-bar" id="statusBar" style="display:none;">
+    <span></span>
+    <span class="count-pill" id="countPill">0 responses</span>
+  </div>
+
+  <div id="resultsMain"></div>
+  <div class="respondent-list" id="respondentList"></div>
+</main>
+
+<script>
+const flavors = [
+  "Chicken Lumpia",
+  "Chicken Longaniza",
+  "Egg and Mayo",
+  "Cheese Pimiento",
+  "Corned Beef"
+];
+
+const fillingOptions = [
+  { id:'a', text:'A little bit dull, needs more spices' },
+  { id:'b', text:'Right amount of spices' },
+  { id:'c', text:'Some components not matching' },
+  { id:'d', text:'A little too strong on spices' },
+  { id:'e', text:'Others' }
+];
+
+function escapeRegex(str){ return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); }
+function escapeHtml(str){
+  const div = document.createElement('div');
+  div.textContent = str;
+  return div.innerHTML;
+}
+
+function matchFillingId(line){
+  const lower = line.toLowerCase();
+  let best = null;
+  fillingOptions.forEach(o => {
+    if(lower.startsWith(o.text.toLowerCase().slice(0, 12))) best = o.id;
+  });
+  return best;
+}
+
+function parseResponses(rawText){
+  const blocks = rawText
+    .split(/(?=Always Bready\s*—?-?\s*Taste Test Feedback)/i)
+    .map(b => b.trim())
+    .filter(Boolean);
+
+  const finalBlocks = blocks.length ? blocks : (rawText.includes('From:') ? [rawText.trim()] : []);
+
+  const results = [];
+  finalBlocks.forEach(block => {
+    const fromMatch = block.match(/From:\s*(.+)/i);
+    if(!fromMatch) return;
+    const respondent = fromMatch[1].trim();
+    const responses = {};
+
+    flavors.forEach((flavor, idx) => {
+      const nextFlavorPattern = flavors
+        .filter(f => f !== flavor)
+        .map(f => escapeRegex(f))
+        .join('|');
+      const re = new RegExp(
+        `${escapeRegex(flavor)}\\*?([\\s\\S]*?)(?=🥖|(?:${nextFlavorPattern})|$)`,
+        'i'
+      );
+      const m = block.match(re);
+      if(!m) return;
+      const section = m[1];
+
+      const textureMatch = section.match(/texture:\s*(\d)/i);
+      const sweetMatch = section.match(/Sweeter dough\?\s*(.+)/i);
+      const bulletLines = [...section.matchAll(/[•\-]\s*([^\n]+)/g)]
+        .map(x => x[1].trim())
+        .filter(l => !/^dough texture/i.test(l) && !/^sweeter dough/i.test(l) && !/^filling:?$/i.test(l));
+
+      const fillingIds = [];
+      const fillingNotes = {};
+      bulletLines.forEach(line => {
+        const id = matchFillingId(line);
+        if(id){
+          fillingIds.push(id);
+          const noteMatch = line.match(/—\s*"([^"]+)"/);
+          if(noteMatch) fillingNotes[id] = noteMatch[1];
+        }
+      });
+
+      responses[flavor] = {
+        texture_rating: textureMatch ? Number(textureMatch[1]) : null,
+        sweeter_dough: sweetMatch ? (/yes/i.test(sweetMatch[1]) ? 'yes_a_little' : 'no_its_enough') : null,
+        filling_feedback: fillingIds,
+        filling_notes: fillingNotes
+      };
+    });
+
+    if(Object.keys(responses).length){
+      results.push({ respondent, responses });
+    }
+  });
+
+  return results;
+}
+
+const pasteArea = document.getElementById('pasteArea');
+const analyzeBtn = document.getElementById('analyzeBtn');
+const clearBtn = document.getElementById('clearBtn');
+const parseNote = document.getElementById('parseNote');
+const statusBar = document.getElementById('statusBar');
+const countPill = document.getElementById('countPill');
+const resultsMain = document.getElementById('resultsMain');
+const respondentListEl = document.getElementById('respondentList');
+
+analyzeBtn.addEventListener('click', () => {
+  const raw = pasteArea.value.trim();
+  parseNote.style.display = 'none';
+
+  if(!raw){
+    parseNote.textContent = 'Paste at least one response first.';
+    parseNote.style.display = 'block';
+    return;
+  }
+
+  const entries = parseResponses(raw);
+
+  if(entries.length === 0){
+    parseNote.textContent = "Couldn't find any responses in that text — make sure each one includes a \"From:\" line and the 🥖 flavor sections, then try again.";
+    parseNote.style.display = 'block';
+    resultsMain.innerHTML = '';
+    statusBar.style.display = 'none';
+    respondentListEl.textContent = '';
+    return;
+  }
+
+  render(entries);
+});
+
+clearBtn.addEventListener('click', () => {
+  pasteArea.value = '';
+  resultsMain.innerHTML = '';
+  statusBar.style.display = 'none';
+  respondentListEl.textContent = '';
+  parseNote.style.display = 'none';
+});
+
+function render(entries){
+  statusBar.style.display = 'flex';
+  countPill.textContent = `${entries.length} response${entries.length === 1 ? '' : 's'}`;
+
+  let html = '';
+  flavors.forEach(flavor => {
+    const flavorResponses = entries
+      .map(e => e.responses && e.responses[flavor])
+      .filter(r => r && r.texture_rating !== null);
+    const n = flavorResponses.length;
+
+    const dist = {1:0,2:0,3:0,4:0,5:0};
+    let sum = 0;
+    flavorResponses.forEach(r => {
+      if(dist[r.texture_rating] !== undefined){
+        dist[r.texture_rating]++;
+        sum += r.texture_rating;
+      }
+    });
+    const avg = n ? (sum/n).toFixed(1) : '—';
+    const maxCount = Math.max(1, ...Object.values(dist));
+
+    const wantsSweeter = flavorResponses.filter(r => r.sweeter_dough === 'yes_a_little').length;
+    const enoughSweet = flavorResponses.filter(r => r.sweeter_dough === 'no_its_enough').length;
+
+    const fillingTally = {};
+    const fillingNotesAll = {};
+    fillingOptions.forEach(o => { fillingTally[o.id] = 0; fillingNotesAll[o.id] = []; });
+    flavorResponses.forEach(r => {
+      (r.filling_feedback || []).forEach(id => { if(fillingTally[id] !== undefined) fillingTally[id]++; });
+      if(r.filling_notes){
+        Object.keys(r.filling_notes).forEach(id => {
+          if(fillingNotesAll[id]) fillingNotesAll[id].push(r.filling_notes[id]);
+        });
+      }
+    });
+
+    html += `
+      <div class="flavor-card">
+        <p class="flavor-title">${flavor}</p>
+        <p class="flavor-count">${n} response${n === 1 ? '' : 's'} for this flavor</p>
+
+        <div class="metric">
+          <div class="metric-label"><span>Dough texture</span><span class="avg-badge">${avg} / 5 avg</span></div>
+          ${[5,4,3,2,1].map(num => `
+            <div class="bar-row">
+              <span class="bar-tag">${num}</span>
+              <div class="bar-track"><div class="bar-fill" style="width:${n ? (dist[num]/maxCount*100) : 0}%"></div></div>
+              <span class="bar-num">${dist[num]}</span>
+            </div>`).join('')}
+        </div>
+
+        <div class="metric">
+          <div class="metric-label"><span>Sweeter dough?</span></div>
+          <div class="split-row">
+            <div class="split-item"><div class="split-num">${wantsSweeter}</div><div class="split-label">yes, a little</div></div>
+            <div class="split-item"><div class="split-num">${enoughSweet}</div><div class="split-label">no, it's enough</div></div>
+          </div>
+        </div>
+
+        <div class="metric">
+          <div class="metric-label"><span>Filling feedback</span></div>
+          ${fillingOptions.map(o => `
+            <div class="filling-item">
+              <div class="filling-top">
+                <span class="filling-text">${o.text}</span>
+                <span class="filling-tally">${fillingTally[o.id]}</span>
+              </div>
+              ${fillingNotesAll[o.id].length ? `
+                <div class="filling-notes">
+                  ${fillingNotesAll[o.id].map(note => `<div class="filling-note">"${escapeHtml(note)}"</div>`).join('')}
+                </div>` : ''}
+            </div>`).join('')}
+        </div>
+      </div>
+    `;
+  });
+
+  resultsMain.innerHTML = html;
+
+  const names = entries.map(e => e.respondent).filter(Boolean);
+  respondentListEl.textContent = names.length ? `Responses from: ${names.join(', ')}` : '';
+}
+</script>
+
+</body>
+</html>

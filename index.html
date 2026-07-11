@@ -2,635 +2,439 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
-<title>Always Bready — Taste Test</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Always Bready — Taste Test Survey</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playball&family=Lobster&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root{
-    --cream:#F5EBDA;
-    --cream-card:#FFFBF2;
-    --brown:#3B2417;
+    --cream:#F5E8D3;
+    --cream-soft:#FBF3E6;
+    --brown:#3D2817;
     --brown-soft:#6B4A34;
-    --rust:#C1622D;
-    --rust-dark:#A44E22;
-    --gold:#D9A441;
-    --line:#E4D3B4;
-    --good:#5C7A4F;
+    --rust:#C1502E;
+    --rust-dark:#9E3E22;
+    --gold:#E8A54B;
+    --line:#E3CBA5;
   }
   *{box-sizing:border-box;}
-  html,body{margin:0;padding:0;}
   body{
+    margin:0;
     background:var(--cream);
-    background-image:
-      radial-gradient(circle at 10% 8%, rgba(193,98,45,0.08), transparent 40%),
-      radial-gradient(circle at 90% 90%, rgba(217,164,65,0.10), transparent 45%);
-    font-family:'Quicksand', sans-serif;
     color:var(--brown);
-    min-height:100vh;
-    padding:0 0 60px 0;
+    font-family:'Nunito',sans-serif;
+    padding:0 0 60px;
   }
-  .wrap{max-width:560px;margin:0 auto;padding:0 18px;}
-
-  /* Header */
   header{
     text-align:center;
-    padding:38px 18px 22px 18px;
+    padding:48px 20px 28px;
     position:relative;
   }
-  header .crumbs{
-    position:absolute; inset:0; pointer-events:none; opacity:0.55;
+  header::after{
+    content:"";
+    display:block;
+    width:70px;
+    height:4px;
+    background:var(--rust);
+    border-radius:4px;
+    margin:18px auto 0;
   }
-  h1.logo{
-    font-family:'Montserrat', sans-serif;
-    font-weight:800;
-    letter-spacing:-0.02em;
-    font-size:36px;
-    color:var(--rust-dark);
+  .brand{
+    font-family:'Playball',cursive;
+    font-size:56px;
+    color:var(--rust);
+    line-height:1;
     margin:0;
-    line-height:1.1;
   }
-  .tagline{
-    font-size:14px;
-    letter-spacing:0.14em;
-    text-transform:uppercase;
+  .subbrand{
+    font-family:'Lobster',cursive;
+    font-size:17px;
     color:var(--brown-soft);
-    margin-top:6px;
-    font-weight:600;
+    margin:8px 0 0;
+    letter-spacing:.5px;
   }
   .intro{
-    background:var(--cream-card);
+    max-width:560px;
+    margin:22px auto 0;
+    text-align:center;
+    font-size:15.5px;
+    color:var(--brown-soft);
+    line-height:1.55;
+    padding:0 20px;
+  }
+  form{
+    max-width:620px;
+    margin:36px auto 0;
+    padding:0 20px;
+  }
+  .flavor-card{
+    background:var(--cream-soft);
     border:1px solid var(--line);
     border-radius:18px;
-    padding:18px 20px;
-    margin-top:22px;
-    font-size:15px;
-    line-height:1.55;
+    padding:26px 24px 30px;
+    margin-bottom:26px;
     box-shadow:0 3px 0 var(--line);
   }
-  .intro b{color:var(--rust-dark);}
-
-  /* Progress */
-  .progress-row{
-    display:flex;
-    gap:6px;
-    justify-content:center;
-    margin:22px 0 6px 0;
-  }
-  .dot{
-    width:10px;height:10px;border-radius:50%;
-    background:var(--line);
-    transition:background .25s ease, transform .25s ease;
-  }
-  .dot.done{background:var(--good);}
-  .dot.active{background:var(--rust); transform:scale(1.25);}
-  .progress-label{
-    text-align:center;
-    font-size:12.5px;
-    color:var(--brown-soft);
-    font-weight:600;
-    margin-bottom:18px;
-    letter-spacing:.03em;
-  }
-
-  /* Flavor card */
-  .card{
-    background:var(--cream-card);
-    border:1px solid var(--line);
-    border-radius:20px;
-    padding:24px 20px 22px 20px;
-    margin-bottom:18px;
-    box-shadow:0 4px 0 var(--line);
-    display:none;
-    animation:fadeIn .35s ease;
-  }
-  .card.visible{display:block;}
-  @keyframes fadeIn{from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:translateY(0);}}
-
-  .flavor-name{
-    font-family:'Montserrat', sans-serif;
-    font-weight:800;
-    letter-spacing:-0.01em;
-    font-size:24px;
+  .flavor-title{
+    font-family:'Lobster',cursive;
+    font-size:26px;
     color:var(--rust-dark);
-    margin:0 0 2px 0;
+    margin:0 0 20px;
+    display:flex;
+    align-items:center;
+    gap:10px;
   }
-  .flavor-sub{
-    font-size:12.5px;
-    color:var(--brown-soft);
-    text-transform:uppercase;
-    letter-spacing:.1em;
-    font-weight:600;
-    margin-bottom:18px;
+  .flavor-num{
+    font-family:'Nunito',sans-serif;
+    font-weight:800;
+    font-size:13px;
+    color:var(--cream-soft);
+    background:var(--rust);
+    width:26px;height:26px;
+    border-radius:50%;
+    display:inline-flex;
+    align-items:center;justify-content:center;
+    flex-shrink:0;
   }
-
   .q{
-    margin-top:20px;
-    padding-top:18px;
-    border-top:1px dashed var(--line);
+    margin-bottom:20px;
   }
-  .q:first-of-type{border-top:none; margin-top:6px; padding-top:0;}
-  .q-title{
+  .q:last-child{margin-bottom:0;}
+  .q-label{
     font-weight:700;
-    font-size:15.5px;
-    margin-bottom:4px;
+    font-size:14.5px;
+    color:var(--brown);
+    margin-bottom:10px;
+    display:block;
   }
-  .q-hint{
-    font-size:12.5px;
-    color:var(--brown-soft);
-    margin-bottom:12px;
+  .scale-row{
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
   }
-
-  /* Rating */
-  .rating-row{display:flex; gap:8px; justify-content:space-between;}
-  .rate-btn{
+  .scale-opt{
     flex:1;
-    aspect-ratio:1/1;
-    border-radius:12px;
-    border:1.5px solid var(--line);
-    background:#fff;
+    min-width:44px;
+  }
+  .scale-opt input{position:absolute;opacity:0;width:0;height:0;}
+  .scale-opt label{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    height:44px;
+    border:2px solid var(--line);
+    border-radius:10px;
     font-weight:700;
-    font-size:16px;
     color:var(--brown-soft);
     cursor:pointer;
-    transition:all .15s ease;
+    transition:.15s;
+    background:#fff;
   }
-  .rate-btn:hover{border-color:var(--gold);}
-  .rate-btn.sel{
+  .scale-opt input:checked + label{
     background:var(--rust);
-    border-color:var(--rust-dark);
+    border-color:var(--rust);
     color:#fff;
-    transform:translateY(-2px);
   }
-  .rate-caption{
-    display:flex; justify-content:space-between;
-    font-size:11px; color:var(--brown-soft); margin-top:5px;
+  .scale-caption{
+    display:flex;
+    justify-content:space-between;
+    font-size:11.5px;
+    color:var(--brown-soft);
+    margin-top:6px;
     opacity:.8;
   }
-
-  /* Yes/no pills */
-  .pill-row{display:flex; gap:10px; flex-wrap:wrap;}
-  .pill{
-    padding:11px 16px;
-    border-radius:999px;
-    border:1.5px solid var(--line);
-    background:#fff;
-    font-weight:600;
-    font-size:14px;
-    cursor:pointer;
-    color:var(--brown);
-    transition:all .15s ease;
+  .radio-row, .check-row{
+    display:flex;
+    flex-direction:column;
+    gap:8px;
   }
-  .pill.sel{
-    background:var(--gold);
-    border-color:#b6832a;
-    color:var(--brown);
-  }
-
-  /* Checkboxes */
-  .check-item{
+  .radio-opt, .check-opt{
     display:flex;
     align-items:flex-start;
     gap:10px;
-    padding:11px 12px;
-    border:1.5px solid var(--line);
-    border-radius:12px;
-    margin-bottom:8px;
-    cursor:pointer;
-    background:#fff;
-    transition:all .15s ease;
-  }
-  .check-item.sel{border-color:var(--rust); background:#FDF3EA;}
-  .check-item .box{
-    width:19px;height:19px;min-width:19px;
-    border-radius:6px;
     border:2px solid var(--line);
-    margin-top:2px;
-    display:flex;align-items:center;justify-content:center;
-    background:#fff;
-  }
-  .check-item.sel .box{background:var(--rust); border-color:var(--rust-dark);}
-  .check-item .box svg{display:none; width:12px;height:12px;}
-  .check-item.sel .box svg{display:block;}
-  .check-item .label{font-size:14px; line-height:1.4; padding-top:1px;}
-  .subnote{
-    display:none;
-    margin:8px 0 8px 29px;
-  }
-  .subnote.show{display:block;}
-  .subnote textarea{
-    width:100%;
-    border:1.5px solid var(--line);
     border-radius:10px;
+    padding:11px 14px;
+    background:#fff;
+    cursor:pointer;
+    transition:.15s;
+  }
+  .radio-opt:has(input:checked), .check-opt:has(input:checked){
+    border-color:var(--rust);
+    background:#FDF1E6;
+  }
+  .radio-opt input, .check-opt input{
+    margin-top:2px;
+    accent-color:var(--rust);
+    width:17px;height:17px;
+    flex-shrink:0;
+  }
+  .opt-text{
+    font-size:14px;
+    color:var(--brown);
+    line-height:1.4;
+  }
+  .comment-box{
+    width:100%;
+    margin-top:8px;
+    border:1.5px solid var(--line);
+    border-radius:8px;
     padding:9px 11px;
-    font-family:inherit;
+    font-family:'Nunito',sans-serif;
     font-size:13.5px;
     resize:vertical;
-    min-height:44px;
-    background:#fffefb;
+    min-height:38px;
+    color:var(--brown);
   }
-  .subnote textarea:focus{outline:none; border-color:var(--rust);}
-
-  /* Nav buttons */
-  .nav-row{
-    display:flex;
-    gap:12px;
-    margin-top:24px;
+  .comment-box:focus{outline:2px solid var(--gold);}
+  .name-card{
+    background:var(--cream-soft);
+    border:1px solid var(--line);
+    border-radius:18px;
+    padding:22px 24px;
+    margin-bottom:26px;
   }
-  .btn{
-    flex:1;
-    padding:14px 18px;
-    border-radius:14px;
-    border:none;
-    font-family:inherit;
+  .name-card label{
     font-weight:700;
-    font-size:15px;
-    cursor:pointer;
-    transition:all .15s ease;
-  }
-  .btn-primary{background:var(--rust); color:#fff;}
-  .btn-primary:hover{background:var(--rust-dark);}
-  .btn-primary:disabled{background:#D9C6AE; cursor:not-allowed;}
-  .btn-ghost{background:transparent; color:var(--brown-soft); border:1.5px solid var(--line);}
-  .btn-ghost:hover{border-color:var(--brown-soft);}
-
-  .name-field{
-    margin-top:18px;
-  }
-  .name-field label{
-    font-size:12.5px; font-weight:700; text-transform:uppercase; letter-spacing:.08em; color:var(--brown-soft);
-  }
-  .name-field input{
-    width:100%;
-    margin-top:6px;
-    padding:12px 14px;
-    border-radius:12px;
-    border:1.5px solid var(--line);
-    font-family:inherit;
     font-size:14.5px;
-    background:#fff;
+    display:block;
+    margin-bottom:8px;
   }
-  .name-field input:focus{outline:none; border-color:var(--rust);}
-
-  /* Done screen */
-  .done-screen{
-    display:none;
-    text-align:center;
-    padding:50px 20px;
+  .name-card input{
+    width:100%;
+    padding:11px 13px;
+    border:1.5px solid var(--line);
+    border-radius:8px;
+    font-family:'Nunito',sans-serif;
+    font-size:14.5px;
   }
-  .done-screen.visible{display:block;}
-  .done-emoji{font-size:52px;}
-  .done-title{
-    font-family:'Montserrat', sans-serif;
+  .submit-btn{
+    display:block;
+    width:100%;
+    padding:16px;
+    background:var(--rust);
+    color:#fff;
+    font-family:'Nunito',sans-serif;
     font-weight:800;
-    letter-spacing:-0.01em;
-    font-size:26px;
-    color:var(--rust-dark);
-    margin:10px 0 6px 0;
-  }
-  .done-text{font-size:15px; color:var(--brown-soft); line-height:1.6; max-width:380px; margin:0 auto;}
-  .done-code{
-    margin-top:20px;
-    display:inline-block;
-    background:var(--cream-card);
-    border:1px dashed var(--line);
-    padding:8px 16px;
-    border-radius:10px;
-    font-size:12px;
-    color:var(--brown-soft);
-    letter-spacing:.05em;
-  }
-
-  footer{
-    text-align:center;
-    font-size:12px;
-    color:var(--brown-soft);
-    opacity:.7;
-    margin-top:30px;
-  }
-  .error-banner{
-    display:none;
-    background:#FBE4DD;
-    border:1px solid #E3A98E;
-    color:#7A3116;
+    font-size:16px;
+    border:none;
     border-radius:12px;
-    padding:12px 14px;
-    font-size:13px;
-    margin-top:16px;
-    line-height:1.5;
+    cursor:pointer;
+    transition:.15s;
+    box-shadow:0 3px 0 var(--rust-dark);
   }
-  .error-banner.visible{display:block;}
+  .submit-btn:hover{filter:brightness(1.05);}
+  .submit-btn:active{transform:translateY(2px);box-shadow:0 1px 0 var(--rust-dark);}
+  .submit-btn:disabled{opacity:.6;cursor:default;}
+  .error-msg{
+    color:var(--rust-dark);
+    font-weight:700;
+    font-size:13.5px;
+    text-align:center;
+    margin-top:12px;
+    display:none;
+  }
+  .thankyou{
+    max-width:560px;
+    margin:80px auto;
+    text-align:center;
+    padding:0 20px;
+  }
+  .thankyou .brand{font-size:40px;}
+  .thankyou p{
+    font-size:16px;
+    color:var(--brown-soft);
+    line-height:1.6;
+    margin-top:14px;
+  }
+  .thankyou .stamp{
+    font-size:60px;
+    margin-bottom:6px;
+  }
+  #surveyScreen.hidden, #thankyouScreen.hidden{display:none;}
+  .wa-hint{
+    text-align:center;
+    font-size:12.5px;
+    color:var(--brown-soft);
+    margin-top:10px;
+    opacity:.85;
+  }
+  .wa-fallback{
+    display:inline-block;
+    margin-top:20px;
+    color:var(--rust-dark);
+    font-weight:800;
+    font-size:14px;
+    text-decoration:underline;
+  }
 </style>
 </head>
 <body>
-<div class="wrap">
 
+<div id="surveyScreen">
   <header>
-    <h1 class="logo">Always Bready</h1>
-    <div class="tagline">Taste Test Survey</div>
-    <div class="intro">
-      Hiii! 👋 I'm testing <b>5 pandesal-style bread flavors</b> and I need your honest taste buds. Takes about 2 minutes — 3 quick questions per flavor. No sugar-coating, I can take it 😄🍞
-    </div>
+    <p class="brand">Always Bready</p>
+    <p class="subbrand">a quick taste-test survey</p>
   </header>
+  <p class="intro">Hi! I'm testing a few pandesal flavors before launch and would love your honest thoughts. It only takes about 3 minutes — please rate each bread you tried below. Thank you for helping make Always Bready better! 🍞</p>
 
-  <div id="surveySection">
-    <div class="progress-row" id="progressDots"></div>
-    <div class="progress-label" id="progressLabel"></div>
-
-    <div id="cardsHolder"></div>
-
-    <div class="error-banner" id="errorBanner"></div>
-
-    <div class="nav-row">
-      <button class="btn btn-ghost" id="backBtn">Back</button>
-      <button class="btn btn-primary" id="nextBtn" disabled>Next</button>
+  <form id="surveyForm">
+    <div class="name-card">
+      <label for="respName">Your name (so I know whose feedback this is)</label>
+      <input type="text" id="respName" required placeholder="e.g. Maria">
     </div>
-  </div>
 
-  <div class="done-screen" id="doneScreen">
-    <div class="done-emoji">🥐✨</div>
-    <div class="done-title">Thank you!</div>
-    <div class="done-text">Your answers just got baked into my notes. Seriously appreciate you taking the time — this helps me make Always Bready even better.</div>
-    <div class="done-code" id="doneCode"></div>
-  </div>
+    <div id="flavorContainer"></div>
 
-  <footer id="mainFooter">
-    Made with love (and a lot of flour) — Always Bready 🍞
-  </footer>
+    <button type="submit" class="submit-btn" id="submitBtn">Send my feedback on WhatsApp</button>
+    <p class="error-msg" id="errorMsg">Please answer every question for each bread before submitting 🙏</p>
+    <p class="wa-hint">This opens WhatsApp with your answers already filled in — just hit send there.</p>
+  </form>
 </div>
 
+<div id="thankyouScreen" class="hidden">
+  <div class="thankyou">
+    <div class="stamp">🥖✅</div>
+    <p class="brand" id="thankYouName">Thank you!</p>
+    <p>WhatsApp should now be open with your answers filled in — just hit send there and you're done. This means a lot, it's going straight into making Always Bready's breads better before launch. 💛</p>
+    <a id="waFallbackLink" href="#" target="_blank" rel="noopener" class="wa-fallback">Didn't open? Tap here to open WhatsApp</a>
+  </div>
+</div>
 
 <script>
-const FLAVORS = [
-  {key:"chicken_lumpia", name:"Chicken Lumpia", sub:"Savory filling"},
-  {key:"chicken_longaniza", name:"Chicken Longaniza", sub:"Sweet-savory filling"},
-  {key:"egg_mayo", name:"Egg & Mayo", sub:"Classic filling"},
-  {key:"cheese_pimiento", name:"Cheese Pimiento", sub:"Creamy filling"},
-  {key:"corned_beef", name:"Corned Beef", sub:"Hearty filling"},
+const flavors = [
+  "Chicken Lumpia",
+  "Chicken Longaniza",
+  "Egg and Mayo",
+  "Cheese Pimiento",
+  "Corned Beef"
 ];
 
-const CHECKBOX_OPTIONS = [
-  {id:"dull", label:"A little bit dull — it needs more spices", note:false},
-  {id:"right", label:"Right amount of spices", note:false},
-  {id:"mismatch", label:"Some components not matching (please tell me which)", note:true, notePlaceholder:"Which components didn't match?"},
-  {id:"strong", label:"A little too strong on spices (please specify: salt, sugar, acid, etc.)", note:true, notePlaceholder:"What was too strong?"},
-  {id:"other", label:"Others", note:true, notePlaceholder:"Tell me more..."},
+const fillingOptions = [
+  { id:'a', text:'A little bit dull, it needs more spices' },
+  { id:'b', text:'Right amount of spices' },
+  { id:'c', text:'Some components not matching — please mention which in the box', hasBox:true },
+  { id:'d', text:'A little too strong on spices — please mention which (salt, sugar, acid, etc) in the box', hasBox:true },
+  { id:'e', text:'Others — leave a comment', hasBox:true }
 ];
 
-// index 0 = name entry, 1..5 = flavors
-let step = 0;
-const totalSteps = FLAVORS.length + 1;
-const answers = {}; // flavorKey -> {texture, sweeter, checks:{}, notes:{}}
-let respondentName = "";
+const container = document.getElementById('flavorContainer');
 
-FLAVORS.forEach(f => { answers[f.key] = {texture:null, sweeter:null, checks:{}}; });
-
-const cardsHolder = document.getElementById('cardsHolder');
-const progressDots = document.getElementById('progressDots');
-const progressLabel = document.getElementById('progressLabel');
-const nextBtn = document.getElementById('nextBtn');
-const backBtn = document.getElementById('backBtn');
-
-function buildNameCard(){
-  const div = document.createElement('div');
-  div.className = 'card';
-  div.dataset.step = "0";
-  div.innerHTML = `
-    <div class="flavor-name" style="font-size:24px;">Before we start</div>
-    <div class="flavor-sub">Just so I know who to thank 🙂</div>
-    <div class="name-field">
-      <label for="nameInput">Your name</label>
-      <input type="text" id="nameInput" placeholder="e.g. Aisha">
-    </div>
-  `;
-  cardsHolder.appendChild(div);
-  const input = div.querySelector('#nameInput');
-  input.addEventListener('input', () => {
-    respondentName = input.value.trim();
-    updateNextEnabled();
-  });
-}
-
-function buildFlavorCard(flavor, idx){
-  const div = document.createElement('div');
-  div.className = 'card';
-  div.dataset.step = String(idx + 1);
-
-  const checksHtml = CHECKBOX_OPTIONS.map(opt => `
-    <div class="check-item" data-opt="${opt.id}">
-      <div class="box"><svg viewBox="0 0 24 24" fill="none"><path d="M4 12.5L9.5 18L20 6" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-      <div class="label">${opt.label}</div>
-    </div>
-    ${opt.note ? `<div class="subnote" data-note-for="${opt.id}"><textarea placeholder="${opt.notePlaceholder}" maxlength="200"></textarea></div>` : ''}
-  `).join('');
-
-  div.innerHTML = `
-    <div class="flavor-name">${flavor.name}</div>
-    <div class="flavor-sub">${flavor.sub}</div>
+flavors.forEach((flavor, idx) => {
+  const key = flavor.replace(/\s+/g,'_');
+  const card = document.createElement('div');
+  card.className = 'flavor-card';
+  card.innerHTML = `
+    <p class="flavor-title"><span class="flavor-num">${idx+1}</span>${flavor}</p>
 
     <div class="q">
-      <div class="q-title">1. How do you like the texture of the dough?</div>
-      <div class="q-hint">Rate 1–5, 5 being the best pandesal texture</div>
-      <div class="rating-row">
-        ${[1,2,3,4,5].map(n => `<button type="button" class="rate-btn" data-val="${n}">${n}</button>`).join('')}
+      <span class="q-label">1. How do you like the texture of the dough?</span>
+      <div class="scale-row">
+        ${[1,2,3,4,5].map(n => `
+          <div class="scale-opt">
+            <input type="radio" name="${key}_texture" value="${n}" id="${key}_texture_${n}" required>
+            <label for="${key}_texture_${n}">${n}</label>
+          </div>`).join('')}
       </div>
-      <div class="rate-caption"><span>Needs work</span><span>Perfect pandesal texture</span></div>
+      <div class="scale-caption"><span>1 = not there yet</span><span>5 = perfect pandesal texture</span></div>
     </div>
 
     <div class="q">
-      <div class="q-title">2. Would you like the dough a little bit sweeter?</div>
-      <div class="pill-row">
-        <button type="button" class="pill" data-val="yes">Yes, a little</button>
-        <button type="button" class="pill" data-val="no">No, it's enough</button>
+      <span class="q-label">2. Would you like the dough to be a little bit sweeter?</span>
+      <div class="radio-row">
+        <label class="radio-opt"><input type="radio" name="${key}_sweetness" value="yes_a_little" required><span class="opt-text">Yes, a little</span></label>
+        <label class="radio-opt"><input type="radio" name="${key}_sweetness" value="no_its_enough" required><span class="opt-text">No, it's enough</span></label>
       </div>
     </div>
 
     <div class="q">
-      <div class="q-title">3. What do you think of the filling?</div>
-      <div class="q-hint">Select all that apply</div>
-      ${checksHtml}
+      <span class="q-label">3. What do you think of the filling?</span>
+      <div class="check-row">
+        ${fillingOptions.map(opt => `
+          <label class="check-opt">
+            <input type="checkbox" name="${key}_filling" value="${opt.id}" data-key="${key}" data-box="${opt.hasBox ? '1':'0'}">
+            <span class="opt-text">${opt.text}
+              ${opt.hasBox ? `<textarea class="comment-box" name="${key}_filling_${opt.id}_note" placeholder="Add details here..."></textarea>` : ''}
+            </span>
+          </label>`).join('')}
+      </div>
     </div>
   `;
-  cardsHolder.appendChild(div);
-
-  // Rating
-  div.querySelectorAll('.rate-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      div.querySelectorAll('.rate-btn').forEach(b => b.classList.remove('sel'));
-      btn.classList.add('sel');
-      answers[flavor.key].texture = Number(btn.dataset.val);
-      updateNextEnabled();
-    });
-  });
-
-  // Sweeter pills
-  div.querySelectorAll('.pill').forEach(p => {
-    p.addEventListener('click', () => {
-      div.querySelectorAll('.pill').forEach(x => x.classList.remove('sel'));
-      p.classList.add('sel');
-      answers[flavor.key].sweeter = p.dataset.val;
-      updateNextEnabled();
-    });
-  });
-
-  // Checkboxes
-  div.querySelectorAll('.check-item').forEach(item => {
-    item.addEventListener('click', () => {
-      const id = item.dataset.opt;
-      const isSel = item.classList.toggle('sel');
-      answers[flavor.key].checks[id] = isSel;
-      const note = div.querySelector(`.subnote[data-note-for="${id}"]`);
-      if(note){
-        note.classList.toggle('show', isSel);
-      }
-      updateNextEnabled();
-    });
-  });
-
-  div.querySelectorAll('.subnote textarea').forEach(ta => {
-    ta.addEventListener('click', e => e.stopPropagation());
-    ta.addEventListener('input', () => {
-      const id = ta.closest('.subnote').dataset.noteFor;
-      answers[flavor.key][`note_${id}`] = ta.value;
-    });
-  });
-}
-
-buildNameCard();
-FLAVORS.forEach((f, i) => buildFlavorCard(f, i));
-
-function renderDots(){
-  progressDots.innerHTML = '';
-  for(let i=0;i<totalSteps;i++){
-    const d = document.createElement('div');
-    d.className = 'dot' + (i < step ? ' done' : (i === step ? ' active' : ''));
-    progressDots.appendChild(d);
-  }
-  if(step === 0){
-    progressLabel.textContent = "Let's get started";
-  } else {
-    progressLabel.textContent = `Bread ${step} of ${FLAVORS.length} — ${FLAVORS[step-1].name}`;
-  }
-}
-
-function showStep(){
-  document.querySelectorAll('.card').forEach(c => {
-    c.classList.toggle('visible', Number(c.dataset.step) === step);
-  });
-  backBtn.style.visibility = step === 0 ? 'hidden' : 'visible';
-  nextBtn.textContent = step === totalSteps - 1 ? 'Submit' : 'Next';
-  renderDots();
-  updateNextEnabled();
-  window.scrollTo({top:0, behavior:'smooth'});
-}
-
-function updateNextEnabled(){
-  let ok = true;
-  if(step === 0){
-    ok = respondentName.length > 0;
-  } else {
-    const f = FLAVORS[step-1];
-    const a = answers[f.key];
-    ok = a.texture !== null && a.sweeter !== null && Object.values(a.checks).some(v => v);
-  }
-  nextBtn.disabled = !ok;
-}
-
-backBtn.addEventListener('click', () => {
-  if(step > 0){ step--; showStep(); }
+  container.appendChild(card);
 });
 
-nextBtn.addEventListener('click', async () => {
-  if(step < totalSteps - 1){
-    step++;
-    showStep();
-  } else {
-    await submitSurvey();
-  }
-});
-
-/* ============================================================
-   DEPLOYMENT CONFIG
-   Paste your Google Apps Script Web App URL below.
-   See the setup instructions provided alongside this file.
-   ============================================================ */
-const CONFIG = {
-  SHEET_WEBHOOK_URL: "https://script.google.com/macros/s/AKfycbxP4JsMxqYZZ7FcvmnqP5Qg6RSeB3DP_0fIOXoaiZs2wjp9qADtESJrAWZbNjCF4A6p/exec"
-};
-
-function genCode(){
-  return Math.random().toString(36).slice(2,6).toUpperCase() + '-' + Math.random().toString(36).slice(2,6).toUpperCase();
+// require at least one filling checkbox per flavor
+function fillingValidFor(key){
+  return document.querySelectorAll(`input[name="${key}_filling"]:checked`).length > 0;
 }
 
-function flattenAnswers(){
-  const flat = {};
-  FLAVORS.forEach(f => {
-    const a = answers[f.key];
-    flat[`${f.key}_texture`] = a.texture ?? '';
-    flat[`${f.key}_sweeter`] = a.sweeter ?? '';
-    const checkedLabels = CHECKBOX_OPTIONS.filter(o => a.checks && a.checks[o.id]).map(o => o.label);
-    flat[`${f.key}_filling_feedback`] = checkedLabels.join(' | ');
-    const noteBits = CHECKBOX_OPTIONS
-      .filter(o => a.checks && a.checks[o.id] && a[`note_${o.id}`])
-      .map(o => `${o.id}: ${a[`note_${o.id}`]}`);
-    flat[`${f.key}_notes`] = noteBits.join(' | ');
+const form = document.getElementById('surveyForm');
+const errorMsg = document.getElementById('errorMsg');
+const submitBtn = document.getElementById('submitBtn');
+
+const BAKERY_WHATSAPP_NUMBER = '971586321718'; // no + or leading zeros, per wa.me format
+
+const sweetnessLabel = v => v === 'yes_a_little' ? "Yes, a little" : "No, it's enough";
+const fillingLabelMap = Object.fromEntries(fillingOptions.map(o => [o.id, o.text]));
+
+form.addEventListener('submit', (e) => {
+  e.preventDefault();
+  errorMsg.style.display = 'none';
+
+  let allFillingsValid = true;
+  flavors.forEach(flavor => {
+    const key = flavor.replace(/\s+/g,'_');
+    if(!fillingValidFor(key)) allFillingsValid = false;
   });
-  return flat;
-}
 
-function showError(msg){
-  const banner = document.getElementById('errorBanner');
-  banner.textContent = msg;
-  banner.classList.add('visible');
-}
-
-function clearError(){
-  document.getElementById('errorBanner').classList.remove('visible');
-}
-
-async function submitSurvey(){
-  clearError();
-  nextBtn.disabled = true;
-  nextBtn.textContent = 'Sending...';
-
-  const code = genCode();
-  const payload = {
-    respondent: respondentName,
-    submittedAt: new Date().toISOString(),
-    code,
-    ...flattenAnswers()
-  };
-
-  if(!CONFIG.SHEET_WEBHOOK_URL || CONFIG.SHEET_WEBHOOK_URL.indexOf('PASTE_YOUR') === 0){
-    nextBtn.disabled = false;
-    nextBtn.textContent = 'Submit';
-    showError("This survey isn't connected to a results sheet yet — the site owner needs to finish setup. Your answers were not saved.");
+  if(!form.checkValidity() || !allFillingsValid){
+    form.reportValidity();
+    errorMsg.style.display = 'block';
     return;
   }
 
-  try{
-    // no-cors: Apps Script web apps don't return CORS headers, so we
-    // can't read the response, but the request still reaches the sheet.
-    await fetch(CONFIG.SHEET_WEBHOOK_URL, {
-      method: 'POST',
-      mode: 'no-cors',
-      body: JSON.stringify(payload)
+  submitBtn.disabled = true;
+  submitBtn.textContent = 'Opening WhatsApp...';
+
+  const formData = new FormData(form);
+  const respondent = formData.get('respName').trim();
+
+  let message = `*Always Bready — Taste Test Feedback*\nFrom: ${respondent}\n`;
+
+  flavors.forEach(flavor => {
+    const key = flavor.replace(/\s+/g,'_');
+    const texture = formData.get(`${key}_texture`);
+    const sweetness = sweetnessLabel(formData.get(`${key}_sweetness`));
+    const fillingChecked = Array.from(document.querySelectorAll(`input[name="${key}_filling"]:checked`)).map(el => el.value);
+
+    message += `\n🥖 *${flavor}*\n`;
+    message += `- Dough texture: ${texture}/5\n`;
+    message += `- Sweeter dough? ${sweetness}\n`;
+    message += `- Filling:\n`;
+    fillingChecked.forEach(id => {
+      const noteEl = document.querySelector(`textarea[name="${key}_filling_${id}_note"]`);
+      const note = noteEl && noteEl.value.trim() ? ` — "${noteEl.value.trim()}"` : '';
+      message += `   • ${fillingLabelMap[id]}${note}\n`;
     });
-  }catch(e){
-    console.error('Submit error', e);
-    nextBtn.disabled = false;
-    nextBtn.textContent = 'Submit';
-    showError("Couldn't send your answers — please check your connection and try again.");
-    return;
-  }
+  });
 
-  document.getElementById('surveySection').style.display = 'none';
-  document.getElementById('doneScreen').classList.add('visible');
-  document.getElementById('doneCode').textContent = `Confirmation: ${code}`;
-}
+  const waUrl = `https://wa.me/${BAKERY_WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
 
-showStep();
+  const firstName = respondent.split(' ')[0] || respondent;
+  document.getElementById('thankYouName').textContent = `Thank you, ${firstName}!`;
+  document.getElementById('waFallbackLink').href = waUrl;
+  document.getElementById('surveyScreen').classList.add('hidden');
+  document.getElementById('thankyouScreen').classList.remove('hidden');
 
+  const link = document.createElement('a');
+  link.href = waUrl;
+  link.target = '_blank';
+  link.rel = 'noopener';
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+});
 </script>
+
 </body>
 </html>
