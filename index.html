@@ -315,7 +315,10 @@ const fillingOptions = [
   { id:'b', text:'Right amount of spices' },
   { id:'c', text:'Some components not matching — please mention which in the box', hasBox:true },
   { id:'d', text:'A little too strong on spices — please mention which (salt, sugar, acid, etc) in the box', hasBox:true },
-  { id:'e', text:'Others — leave a comment', hasBox:true }
+  { id:'e', text:'It could use more filling' },
+  { id:'f', text:'I like it bite size' },
+  { id:'g', text:'Bring it back to big size'},
+  { id:'h', text:'Others — leave a comment', hasBox:true }
 ];
 
 const container = document.getElementById('flavorContainer');
@@ -348,7 +351,7 @@ flavors.forEach((flavor, idx) => {
     </div>
 
     <div class="q">
-      <span class="q-label">3. What do you think of the filling?</span>
+      <span class="q-label">3. What do you think of the filling? (Select all that apply)</span>
       <div class="check-row">
         ${fillingOptions.map(opt => `
           <label class="check-opt">
